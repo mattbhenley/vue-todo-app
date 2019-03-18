@@ -1,20 +1,20 @@
 {
-  "name": "vue-todo-app",
+  "name": "todo-vue",
   "version": "1.0.0",
-  "description": "vue todo list ",
+  "description": "",
   "main": "index.html",
   "scripts": {
-    "serve": "npm live-server --entry-file=index.html",
+    "serve": "npx live-server --entry-file=index.html",
     "start": "npm run serve"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mattbhenley/vue-todo-app.git"
-  },
-  "author": "Matt Henley",
+  "author": "Adrian Mejia <me@adrianmejia.com> (http://adrianmejia.com)",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mattbhenley/vue-todo-app/issues"
+  "dependencies": {
+    "todomvc-app-css": "2.1.2",
+    "vue": "2.5.17",
+    "vue-router": "3.0.1"
   },
-  "homepage": "https://github.com/mattbhenley/vue-todo-app#readme"
+  "devDependencies": {
+    "live-server": "1.2.0"
+  }
 }

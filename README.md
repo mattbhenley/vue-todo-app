@@ -1,2 +1,2 @@
 # vue-todo-app
-A todo app made with vue.js
+Learn Vue.js doing a Todo app with routing
