@@ -70,19 +70,70 @@ const todoComponet = Vue.component('todo-app', {
                 }
             }
         },
-        template:
-        <div>
-            <section class="todoapp">
-            <header class="header">
-            <H1>Todos</H1>
-            < input class = "new-todo"
-            placeholder = "What needs to be done?"
-            v - model.trim = "newTodo"
-            @keyup.enter = "createTodo"
-            autofocus >
-            </header>
+    template: `
+    <div>
+      <section class="todoapp">
+        <header class="header">
+          <h1>Todos</h1>
+          <input class="new-todo" placeholder="What needs to be done?"
+            v-model.trim="newTodo"
+            @keyup.enter="createTodo"
+            autofocus>
+        </header>
+        <!-- This section should be hidden by default and shown when there are todos -->
+        <section class="main">
+          <ul class="todo-list">
+            <li v-for="todo in filteredTodos"
+                :class="{completed: todo.isDone, editing: todo === editingTodo}">
+              <div class="view">
+                <input class="toggle" type="checkbox" v-model="todo.isDone">
+                <label @dblclick="startEditing(todo)">{{todo.text}}</label>
+                <button class="destroy" @click="destroy(todo)"></button>
+              </div>
+              <input class="edit"
+                @keyup.escape="cancelEditing(todo)"
+                @keyup.enter="finishEditing(todo)"
+                @blur="finishEditing(todo)"
+                v-model.trim="todo.text">
+            </li>
+          </ul>
+        </section>
+        <!-- This footer should hidden by default and shown when there are todos -->
+        <footer class="footer">
+          <span class="todo-count">
+            <strong>{{itemsLeft}}</strong> item(s) left</span>
+          <!-- Remove this if you don't implement routing -->
+          <ul class="filters">
+            <li>
+              <router-link to="/all" :class="{ selected: status === 'all' }">All</router-link>
+            </li>
+            <li>
+              <router-link to="/active" :class="{ selected: status === 'active' }">Active</router-link>
+            </li>
+            <li>
+              <router-link to="/completed" :class="{ selected: status === 'completed' }">Completed</router-link>
+            </li>
+          </ul>
+          <!-- Hidden if no completed items are left ↓ -->
+          <button class="clear-completed" @click="clearCompleted">Clear completed</button>
+        </footer>
+      </section>
+      <footer class="info">
+        <p>Double-click to edit a todo</p>
+        <p>Esc to cancel edit</p>
+        <p>Enter to accept edit</p>
+      </footer>
+    </div>`,
+});
 
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        { path: '/:status', component: { template: `<todo-app></todo-app>` } },
+        { path: '*', redirect: '/all' },
+    ]
+});
 
-            </section>
-        </div>
-})
+const app = new Vue({
+    router
+}).$mount('#app')
